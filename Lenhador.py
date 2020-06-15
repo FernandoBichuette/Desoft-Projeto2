@@ -109,8 +109,8 @@ class Galho(pygame.sprite.Sprite):
 class Tronco(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(
-            path.join(img_dir, 'Tronco2.png')).convert_alpha()
+        self.image = pygame.image.load(path.join(img_dir, 'Tronco.png')).convert_alpha()
+        self.image = pygame.transform.scale(self.image, (300, 800))
         self.image.set_colorkey(BLACK)
 
         self.rect = self.image.get_rect()
