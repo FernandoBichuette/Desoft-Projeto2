@@ -161,7 +161,7 @@ for branch in GALHO_LISTA:
     galho.add(g)
 
 try:
-    
+
     running = True
     menu = True
 
@@ -209,7 +209,7 @@ try:
                         player.pontos), True, YELLOW)
                     textRect = text.get_rect()
                     textRect.center = (WIDTH // 2 - 300, 50)
-                    
+
                     for branch in galho:
                         branch.rect.y += 100
                         if branch.rect.top >= HEIGHT:
