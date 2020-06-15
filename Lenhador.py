@@ -4,7 +4,7 @@ import random
 import time
 
 img_dir = path.join(path.dirname(__file__), 'img')
-snd_dir = path.join(path.dirname(__file__), 'snd2')
+
 
 WIDTH = 800
 HEIGHT = 600
@@ -110,7 +110,7 @@ class Tronco(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(
-            path.join(img_dir, 'Tronco3.png')).convert_alpha()
+            path.join(img_dir, 'Tronco2.png')).convert_alpha()
         self.image.set_colorkey(BLACK)
 
         self.rect = self.image.get_rect()
