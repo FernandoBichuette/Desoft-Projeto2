@@ -104,12 +104,12 @@ try:
                 if event.key == pygame.K_RIGHT:
                     player.pos = 170
                     player.image = pygame.image.load(
-                        path.join(img_dir, 'Stickman11.png')).convert_alpha()
+                        path.join(img_dir, 'LenhadorD.png')).convert_alpha()
 
                 if event.key == pygame.K_LEFT:
                     player.pos = -220
                     player.image = pygame.image.load(
-                        path.join(img_dir, 'Stickman11.png')).convert_alpha()
+                        path.join(img_dir, 'LenhadorE.png')).convert_alpha()
                     player.image = pygame.transform.scale(
                         player.image, (120, 120))
 
@@ -130,14 +130,14 @@ try:
                 if event.key == pygame.K_LEFT:
                     player.pos = 0
                     player.image = pygame.image.load(
-                        path.join(img_dir, 'Stickman11.png')).convert_alpha()
+                        path.join(img_dir, 'LenhadorE.png')).convert_alpha()
                     player.image = pygame.transform.scale(
                         player.image, (120, 120))
 
                 if event.key == pygame.K_RIGHT:
                     player.pos = 0
                     player.image = pygame.image.load(
-                        path.join(img_dir, 'Stickman11.png')).convert_alpha()
+                        path.join(img_dir, 'LenhadorD.png')).convert_alpha()
                     player.image = pygame.transform.scale(
                         player.image, (120, 120))
 
