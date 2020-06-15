@@ -4,7 +4,7 @@ import random
 import time
 
 img_dir = path.join(path.dirname(__file__), 'img')
-
+snd_dir = path.join(path.dirname(__file__), 'snd2')
 
 WIDTH = 800
 HEIGHT = 600
@@ -121,21 +121,22 @@ class Tronco(pygame.sprite.Sprite):
         pass
 
 
-background = pygame.image.load(path.join(img_dir, 'Background.jpg'))
+background = pygame.image.load(path.join(img_dir, 'fundo.jpg'))
 background = pygame.transform.scale(background, (800, 600))
 background_rect = background.get_rect()
 
-imgfundo = pygame.image.load(path.join(img_dir, 'MenuFundo.jpg'))
-imgfundo = pygame.transform.scale(imgfundo, (800, 600))
-imgfundo_rect = imgfundo.get_rect()
+imginicio = pygame.image.load(path.join(img_dir, 'Tela de inicio.png'))
+imginicio = pygame.transform.scale(imginicio, (800, 600))
+imgfundo_rect = imginicio.get_rect()
 
 
 
+pygame.init()
 
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
-pygame.display.set_caption("ChopperMAN!!!")
+pygame.display.set_caption("Lumberjack")
 
 previous_time = pygame.time.get_ticks()
 
@@ -149,7 +150,7 @@ all_sprites.add(tronco)
 all_sprites.add(player)
 all_sprites.add(health)
 
-font = pygame.font.SysFont("comicsansms", 72)
+font = pygame.font.SysFont("C:\Windows\Fonts\Arial.ttf", 72)
 text = font.render("Pontos: {0}".format(player.pontos), True, YELLOW)
 textRect = text.get_rect()
 textRect.center = (WIDTH // 2 - 300, 50)
@@ -160,14 +161,7 @@ for branch in GALHO_LISTA:
     galho.add(g)
 
 try:
-    print("------------------------")
-    print("       CHOPPERMAN       ")
-    print(
-        "\nOs controles do jogo são:\nTecla [Direita]  - Mover para a direita\nTecla [Esquerda] - Mover para a esquerda")
-    print("Quantas madeiras você consegue cortar?\nBoa sorte!\n")
-    print("------------------------")
-    pygame.mixer.music.play(loops=-1)
-
+    
     running = True
     menu = True
 
@@ -183,7 +177,7 @@ try:
                     menu = False
 
         screen.fill(BLACK)
-        screen.blit(imgfundo, imgfundo_rect)
+        screen.blit(imginicio, imgfundo_rect)
         pygame.display.flip()
 
     while running:
@@ -215,7 +209,7 @@ try:
                         player.pontos), True, YELLOW)
                     textRect = text.get_rect()
                     textRect.center = (WIDTH // 2 - 300, 50)
-                    destroy_sound.play()
+                    
                     for branch in galho:
                         branch.rect.y += 100
                         if branch.rect.top >= HEIGHT:
