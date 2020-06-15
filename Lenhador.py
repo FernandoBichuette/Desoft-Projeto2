@@ -32,8 +32,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = pygame.image.load(
-            path.join(img_dir, 'Stickman11.png')).convert_alpha()
+        self.image = pygame.image.load(path.join(img_dir, 'LenhadorE.png')).convert_alpha()
         self.image = pygame.transform.scale(self.image, (120, 120))
 
         self.image.set_colorkey(BLACK)
@@ -150,7 +149,7 @@ all_sprites.add(tronco)
 all_sprites.add(player)
 all_sprites.add(health)
 
-font = pygame.font.SysFont("C:\Windows\Fonts\Arial.ttf", 72)
+font = pygame.font.SysFont("C:\Windows\Fonts\Capri.ttf", 72)
 text = font.render("Pontos: {0}".format(player.pontos), True, YELLOW)
 textRect = text.get_rect()
 textRect.center = (WIDTH // 2 - 300, 50)
@@ -192,15 +191,12 @@ try:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RIGHT:
                     player.pos = 170
-                    player.image = pygame.image.load(
-                        path.join(img_dir, 'Stickman11.png')).convert_alpha()
+                    player.image = pygame.image.load(path.join(img_dir, 'LenhadorD.png')).convert_alpha()
 
                 if event.key == pygame.K_LEFT:
                     player.pos = -220
-                    player.image = pygame.image.load(
-                        path.join(img_dir, 'Stickman11.png')).convert_alpha()
-                    player.image = pygame.transform.scale(
-                        player.image, (120, 120))
+                    player.image = pygame.image.load(path.join(img_dir, 'LenhadorE.png')).convert_alpha()
+                    player.image = pygame.transform.scale(player.image, (120, 120))
 
                 if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
                     health.regen = 5
@@ -219,14 +215,14 @@ try:
                 if event.key == pygame.K_LEFT:
                     player.pos = 0
                     player.image = pygame.image.load(
-                        path.join(img_dir, 'Stickman11.png')).convert_alpha()
+                        path.join(img_dir, 'LenhadorE.png')).convert_alpha()
                     player.image = pygame.transform.scale(
                         player.image, (120, 120))
 
                 if event.key == pygame.K_RIGHT:
                     player.pos = 0
                     player.image = pygame.image.load(
-                        path.join(img_dir, 'Stickman11.png')).convert_alpha()
+                        path.join(img_dir, 'LenhadorD.png')).convert_alpha()
                     player.image = pygame.transform.scale(
                         player.image, (120, 120))
 
