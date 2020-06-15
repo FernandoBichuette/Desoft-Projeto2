@@ -2,10 +2,13 @@ import pygame
 from os import path
 import random
 import time
-import Lenhador
+from Lenhador import Tronco
+from Lenhador import Player
+from Lenhador import HealthBar
+from Lenhador import Galho
+
 
 img_dir = path.join(path.dirname(__file__), 'img')
-
 
 
 WIDTH = 800
@@ -28,105 +31,6 @@ GALHO_LISTA = [(450, HEIGHT - 120),
                (200, HEIGHT - 420),
                (450, HEIGHT - 570),
                (450, HEIGHT - 720)]
-
-
-
-
-
-
-
-class Player(pygame.sprite.Sprite):
-    def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
-
-        self.image = pygame.image.load(path.join(img_dir, 'LenhadorE.png')).convert_alpha()
-        self.image = pygame.transform.scale(self.image, (120, 120))
-
-        self.image.set_colorkey(BLACK)
-
-        self.rect = self.image.get_rect()
-        self.rect.right = WIDTH/2 - 30
-        self.rect.y = HEIGHT - 100
-
-        self.pontos = 0
-        self.score = 0
-
-        self.pos = 0
-
-    def update(self):
-        self.rect.x += self.pos
-        self.pontos += self.score
-
-        if self.rect.right < WIDTH/2 - 30:
-            self.rect.right = WIDTH/2 - 30
-        if self.rect.left > WIDTH/2 + 30:
-            self.rect.left = WIDTH/2 + 30
-        self.score = 0
-
-
-class HealthBar(pygame.sprite.Sprite):
-    def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
-
-        self.VIDA = VIDA
-        self.image = pygame.image.load(
-            path.join(img_dir, 'health.png')).convert_alpha()
-        self.image = pygame.transform.scale(self.image, (self.VIDA, 20))
-        self.image.set_colorkey(BLACK)
-
-        self.rect = self.image.get_rect()
-        self.rect.centerx = WIDTH/2
-        self.rect.y = 50
-
-        self.regen = 1
-
-    def update(self):
-        if self.VIDA >= 100:
-            self.regen = -5
-        self.VIDA += self.regen
-        if self.VIDA < 0:
-            self.VIDA = 0
-        self.image = pygame.transform.scale(self.image, (self.VIDA, 20))
-        self.regen = 0
-
-
-class Galho(pygame.sprite.Sprite):
-    def __init__(self, x, y):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(
-            path.join(img_dir, 'Galho.png')).convert_alpha()
-        self.image.set_colorkey(BLACK)
-
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
-
-    def update(self):
-        if self.rect.x == 200:
-            self.image = pygame.image.load(path.join(img_dir, 'GalhoE.png')).convert_alpha()
-            
-            self.image.set_colorkey(BLACK)
-        else:
-            self.image = pygame.image.load(path.join(img_dir, 'GalhoD.png')).convert_alpha()
-            
-            self.image.set_colorkey(BLACK)
-
-
-class Tronco(pygame.sprite.Sprite):
-    def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(path.join(img_dir, 'Tronco.png')).convert_alpha()
-        self.image = pygame.transform.scale(self.image, (300, 800))
-        self.image.set_colorkey(BLACK)
-
-        self.rect = self.image.get_rect()
-        self.rect.centerx = 400
-        self.rect.y = 0
-
-    def update(self):
-        pass
-<<<<<<< HEAD
-
 
 background = pygame.image.load(path.join(img_dir, 'fundo.jpg'))
 background = pygame.transform.scale(background, (800, 600))
@@ -157,7 +61,7 @@ all_sprites.add(tronco)
 all_sprites.add(player)
 all_sprites.add(health)
 
-font = pygame.font.SysFont("C:\Windows\Fonts\Capri.ttf", 72)
+font = pygame.font.SysFont("C:\Windows\Fonts\Arial.ttf", 72)
 text = font.render("Pontos: {0}".format(player.pontos), True, YELLOW)
 textRect = text.get_rect()
 textRect.center = (WIDTH // 2 - 300, 50)
@@ -168,7 +72,7 @@ for branch in GALHO_LISTA:
     galho.add(g)
 
 try:
-    
+
     running = True
     menu = True
 
@@ -199,12 +103,15 @@ try:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RIGHT:
                     player.pos = 170
-                    player.image = pygame.image.load(path.join(img_dir, 'LenhadorD.png')).convert_alpha()
+                    player.image = pygame.image.load(
+                        path.join(img_dir, 'Stickman11.png')).convert_alpha()
 
                 if event.key == pygame.K_LEFT:
                     player.pos = -220
-                    player.image = pygame.image.load(path.join(img_dir, 'LenhadorE.png')).convert_alpha()
-                    player.image = pygame.transform.scale(player.image, (120, 120))
+                    player.image = pygame.image.load(
+                        path.join(img_dir, 'Stickman11.png')).convert_alpha()
+                    player.image = pygame.transform.scale(
+                        player.image, (120, 120))
 
                 if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
                     health.regen = 5
@@ -213,7 +120,7 @@ try:
                         player.pontos), True, YELLOW)
                     textRect = text.get_rect()
                     textRect.center = (WIDTH // 2 - 300, 50)
-                    
+
                     for branch in galho:
                         branch.rect.y += 100
                         if branch.rect.top >= HEIGHT:
@@ -223,14 +130,14 @@ try:
                 if event.key == pygame.K_LEFT:
                     player.pos = 0
                     player.image = pygame.image.load(
-                        path.join(img_dir, 'LenhadorE.png')).convert_alpha()
+                        path.join(img_dir, 'Stickman11.png')).convert_alpha()
                     player.image = pygame.transform.scale(
                         player.image, (120, 120))
 
                 if event.key == pygame.K_RIGHT:
                     player.pos = 0
                     player.image = pygame.image.load(
-                        path.join(img_dir, 'LenhadorD.png')).convert_alpha()
+                        path.join(img_dir, 'Stickman11.png')).convert_alpha()
                     player.image = pygame.transform.scale(
                         player.image, (120, 120))
 
@@ -301,5 +208,3 @@ try:
 
 finally:
     pygame.quit()
-=======
->>>>>>> a8eeb7028d756596f720a26d3e75e60e73ca5881
