@@ -104,11 +104,11 @@ class Galho(pygame.sprite.Sprite):
     def update(self):
         if self.rect.x == 200:
             self.image = pygame.image.load(path.join(img_dir, 'GalhoE.png')).convert_alpha()
-            
+
             self.image.set_colorkey(BLACK)
         else:
             self.image = pygame.image.load(path.join(img_dir, 'GalhoD.png')).convert_alpha()
-            
+
             self.image.set_colorkey(BLACK)
 
 
