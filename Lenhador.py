@@ -5,6 +5,7 @@ import time
 import Lenhador
 
 img_dir = path.join(path.dirname(__file__), 'img')
+fnt_dir = path.join(path.dirname(__file__), 'font')
 
 
 
@@ -64,31 +65,10 @@ class Player(pygame.sprite.Sprite):
         self.score = 0
 
 
-class HealthBar(pygame.sprite.Sprite):
-    def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
-
-        self.VIDA = VIDA
-        self.image = pygame.image.load(
-            path.join(img_dir, 'health.png')).convert_alpha()
-        self.image = pygame.transform.scale(self.image, (self.VIDA, 20))
-        self.image.set_colorkey(BLACK)
-
-        self.rect = self.image.get_rect()
-        self.rect.centerx = WIDTH/2
-        self.rect.y = 50
-
-        self.regen = 1
-
-    def update(self):
-        if self.VIDA >= 100:
-            self.regen = -5
-        self.VIDA += self.regen
-        if self.VIDA < 0:
-            self.VIDA = 0
-        self.image = pygame.transform.scale(self.image, (self.VIDA, 20))
-        self.regen = 0
-
+def load_assets(img_dir, fnt_dir):
+    assets = {}
+    assets["score_font"] = pygame.font.Font(path.join(fnt_dir, "PressStart2P.ttf"), 28)
+    return assets
 
 class Galho(pygame.sprite.Sprite):
     def __init__(self, x, y):

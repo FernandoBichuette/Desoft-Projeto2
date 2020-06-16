@@ -4,11 +4,10 @@ import random
 import time
 from Lenhador import Tronco
 from Lenhador import Player
-from Lenhador import HealthBar
 from Lenhador import Galho
-
-
+from Lenhador import load_assets
 img_dir = path.join(path.dirname(__file__), 'img')
+fnt_dir = path.join(path.dirname(__file__), 'font')
 
 
 WIDTH = 800
@@ -23,8 +22,8 @@ GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 
-TAXA_VIDA = 200
-VIDA = 100
+
+VIDA = 10
 
 GALHO_LISTA = [(450, HEIGHT - 120),
                (200, HEIGHT - 270),
@@ -45,6 +44,10 @@ imgfundo_rect = imginicio.get_rect()
 pygame.init()
 
 
+assets = load_assets(img_dir, fnt_dir)
+
+score_font = assets["score_font"]
+
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 pygame.display.set_caption("Lumberjack")
@@ -55,11 +58,9 @@ all_sprites = pygame.sprite.Group()
 galho = pygame.sprite.Group()
 
 tronco = Tronco()
-health = HealthBar()
 player = Player()
 all_sprites.add(tronco)
 all_sprites.add(player)
-all_sprites.add(health)
 
 font = pygame.font.SysFont("C:\Windows\Fonts\Arial.ttf", 72)
 text = font.render("Pontos: {0}".format(player.pontos), True, YELLOW)
@@ -72,7 +73,7 @@ for branch in GALHO_LISTA:
     galho.add(g)
 
 try:
-
+    
     running = True
     menu = True
 
@@ -93,7 +94,7 @@ try:
 
     while running:
 
-        clock.tick(FPS)
+        #clock.tick(FPS)
 
         for event in pygame.event.get():
 
@@ -103,18 +104,15 @@ try:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RIGHT:
                     player.pos = 170
-                    player.image = pygame.image.load(
-                        path.join(img_dir, 'LenhadorD.png')).convert_alpha()
+                    player.image = pygame.image.load(path.join(img_dir, 'LenhadorD.png')).convert_alpha()
 
                 if event.key == pygame.K_LEFT:
                     player.pos = -220
-                    player.image = pygame.image.load(
-                        path.join(img_dir, 'LenhadorE.png')).convert_alpha()
-                    player.image = pygame.transform.scale(
-                        player.image, (120, 120))
+                    player.image = pygame.image.load(path.join(img_dir, 'LenhadorE.png')).convert_alpha()
+                    player.image = pygame.transform.scale(player.image, (120, 120))
 
                 if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
-                    health.regen = 5
+                    
                     player.score = 1
                     text = font.render("Pontos: {0}".format(
                         player.pontos), True, YELLOW)
@@ -129,17 +127,13 @@ try:
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
                     player.pos = 0
-                    player.image = pygame.image.load(
-                        path.join(img_dir, 'LenhadorE.png')).convert_alpha()
-                    player.image = pygame.transform.scale(
-                        player.image, (120, 120))
+                    player.image = pygame.image.load(path.join(img_dir, 'LenhadorE.png')).convert_alpha()
+                    player.image = pygame.transform.scale(player.image, (120, 120))
 
                 if event.key == pygame.K_RIGHT:
                     player.pos = 0
-                    player.image = pygame.image.load(
-                        path.join(img_dir, 'LenhadorD.png')).convert_alpha()
-                    player.image = pygame.transform.scale(
-                        player.image, (120, 120))
+                    player.image = pygame.image.load(path.join(img_dir, 'LenhadorD.png')).convert_alpha()
+                    player.image = pygame.transform.scale(player.image, (120, 120))
 
         if len(galho) < 4:
             lista_posicao = [200, 450]
@@ -148,61 +142,31 @@ try:
             all_sprites.add(g)
             galho.add(g)
 
-        if player.pontos > 199:
-            TAXA_VIDA = 15
-            current_time = pygame.time.get_ticks()
-            if current_time - previous_time > TAXA_VIDA:
-                health.regen = -1
-                previous_time = current_time
+        
 
-        if player.pontos > 149:
-            TAXA_VIDA = 30
-            current_time = pygame.time.get_ticks()
-            if current_time - previous_time > TAXA_VIDA:
-                health.regen = -1
-                previous_time = current_time
-
-        elif player.pontos > 99:
-            TAXA_VIDA = 50
-            current_time = pygame.time.get_ticks()
-            if current_time - previous_time > TAXA_VIDA:
-                health.regen = -1
-                previous_time = current_time
-
-        elif player.pontos > 49:
-            TAXA_VIDA = 75
-            current_time = pygame.time.get_ticks()
-            if current_time - previous_time > TAXA_VIDA:
-                health.regen = -1
-                previous_time = current_time
-
-        elif player.pontos > 19:
-            TAXA_VIDA = 100
-            current_time = pygame.time.get_ticks()
-            if current_time - previous_time > TAXA_VIDA:
-                health.regen = -1
-                previous_time = current_time
-
-        elif player.pontos > 0:
-            current_time = pygame.time.get_ticks()
-            if current_time - previous_time > TAXA_VIDA:
-                health.regen = -1
-                previous_time = current_time
-
-        if health.VIDA <= 0:
+        if VIDA <= 0:
             running = False
 
         all_sprites.update()
 
-        hits = pygame.sprite.spritecollide(player, galho, False)
+        hits = pygame.sprite.spritecollide(player, galho, False,pygame.sprite.collide_mask)
         if hits:
+            VIDA-=1
             print("PONTOS: ", player.pontos-1)
             running = False
+            
+        
 
         screen.fill(BLACK)
         screen.blit(background, background_rect)
         screen.blit(text, textRect)
         all_sprites.draw(screen)
+
+        text_surface = score_font.render(chr(9829) * VIDA, True, RED)
+        text_rect = text_surface.get_rect()
+        text_rect.bottomleft = (WIDTH/2-100, HEIGHT - 530)
+        screen.blit(text_surface, text_rect)
+        
         pygame.display.flip()
 
 
